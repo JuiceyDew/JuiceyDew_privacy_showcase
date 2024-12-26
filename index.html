@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Check</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #intro, #scaryPage {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100vh;
+            width: 100%;
+        }
+
+        /* Intro Screen Styling */
+        #intro {
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #intro h1 {
+            font-size: 40px;
+            color: #0056b3;
+        }
+
+        #intro p {
+            font-size: 18px;
+            margin: 10px 20px;
+            color: #555;
+        }
+
+        #intro button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #intro button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Scary Page Styling */
+        #scaryPage {
+            display: none;
+            background-color: black;
+            color: yellow;
+            flex-direction: column;
+            text-align: center;
+            animation: backgroundFlash 1s infinite alternate;
+        }
+
+        @keyframes backgroundFlash {
+            0% { background-color: black; }
+            50% { background-color: red; }
+            100% { background-color: black; }
+        }
+
+        h1 {
+            font-size: 50px;
+            color: red;
+            text-shadow: 0 0 20px red, 0 0 40px red;
+            animation: titleFlash 2s infinite;
+        }
+
+        @keyframes titleFlash {
+            0% { color: red; }
+            50% { color: yellow; }
+            100% { color: red; }
+        }
+
+        .info {
+            font-size: 20px;
+            margin: 20px;
+            text-shadow: 0 0 5px yellow;
+        }
+    </style>
+</head>
+<body>
+    <!-- Intro Screen -->
+    <div id="intro">
+        <div>
+            <h1>Privacy & Security Check</h1>
+            <p>Welcome to our privacy check tool. This service helps you understand the information your browser shares with websites. Please click the button below to proceed and view your data.</p>
+            <button onclick="startScaryPage()">Proceed to Privacy Check</button>
+        </div>
+    </div>
+
+    <!-- Scary Page -->
+    <div id="scaryPage">
+        <h1>WARNING! YOUR INFORMATION CAN BE STOLEN!</h1>
+        <div class="info">
+            <p>Your Public IP: <span id="ip"></span></p>
+            <p>User-Agent: <span id="userAgent"></span></p>
+            <p>Location: <span id="location"></span></p>
+            <p>Browser Version: <span id="browserVersion"></span></p>
+            <p>Operating System: <span id="os"></span></p>
+            <p>Screen Resolution: <span id="screenResolution"></span></p>
+            <p>Timezone: <span id="timezone"></span></p>
+            <p>Language: <span id="language"></span></p>
+        </div>
+    </div>
+
+    <!-- Alarm Sound -->
+    <audio id="alarmSound" loop>
+        <source src="./Panic Alarm Sound Effect [qRwxbA8HN34].mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        // Display the scary page and start the alarm
+        function startScaryPage() {
+            document.getElementById('intro').style.display = 'none';
+            document.getElementById('scaryPage').style.display = 'flex';
+
+            var alarm = document.getElementById("alarmSound");
+            alarm.volume = 1.0; // Maximum volume
+            alarm.currentTime = 20; // Skip the first 12 seconds
+            alarm.play();
+
+            displayInfo();
+        }
+
+        // Display user information
+        function displayInfo() {
+            document.getElementById("ip").textContent = "149.76.218.44"; // Example IP
+            document.getElementById("userAgent").textContent = navigator.userAgent;
+            document.getElementById("location").textContent = "Location access denied or failed"; // Simulated for demo
+            document.getElementById("browserVersion").textContent = navigator.userAgent.match(/Chrome\/([0-9.]+)/) ? `Chrome ${navigator.userAgent.match(/Chrome\/([0-9.]+)/)[1]}` : "Unknown Browser";
+            document.getElementById("os").textContent = navigator.platform;
+            document.getElementById("screenResolution").textContent = `${window.screen.width}x${window.screen.height}`;
+            document.getElementById("timezone").textContent = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            document.getElementById("language").textContent = navigator.language;
+        }
+
+        // Show the intro page initially
+        document.getElementById('intro').style.display = 'flex';
+    </script>
+</body>
+</html>
